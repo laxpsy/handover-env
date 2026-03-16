@@ -1,7 +1,8 @@
 from dataclasses import dataclass
+from enum import Enum
+
 from entities.handover import UEHandoverState
 from entities.rendering_entities import Coordinates
-from enum import Enum
 
 
 class UEMovementType(Enum):

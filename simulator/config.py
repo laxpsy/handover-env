@@ -2,10 +2,11 @@ from dataclasses import dataclass
 
 
 @dataclass
-class SimulatorConfig:
+class SimulationConfig:
     # rendering parameters
     SCREEN_WIDTH: int = 800
     SCREEN_HEIGHT: int = 600
+    STEP: int = 100
     # path loss model parameters
     PATH_LOSS_EXPONENT: float = 3
     PATH_LOSS_REFERENCE_DISTANCE: float = 1
