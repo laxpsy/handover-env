@@ -13,9 +13,17 @@ class SimulationConfig:
     # calculation constants
     SPEED_OF_LIGHT: float = 299_792_458
     # handover parameters
-    HYSTERISIS_MARGIN: float = 3  # TODO
-    TIME_TO_TRIGGER: float = 3  # TODO
-    PING_PONG_WINDOW: float = 5000  # TODO ms
-    RLF_FAILURE_THRESHOLD: float = -100  # TODO dBm
+    HYSTERISIS_MARGIN: float = 3
+    TIME_TO_TRIGGER: float = 3
+    PING_PONG_WINDOW: float = 3
+    RLF_FAILURE_THRESHOLD: float = -100
     # ue history parameter
     MAX_HISTORY: int = 10
+    # handover type detection parameters
+    EARLY_HANDOVER_WINDOW: int = 1000
+    MIN_HISTORY_LENGTH: int = 3
+    # ue defaults
+    DEFAULT_VELOCITY: float = 1.0
+    # base station defaults
+    DEFAULT_TX_POWER: float = 43.0
+    DEFAULT_FREQUENCY: float = 2.1e9

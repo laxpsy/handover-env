@@ -2,7 +2,12 @@ from enum import Enum
 
 
 class SimulationEvents(Enum):
-    # ties in to perform_handover()
-    HANDOVER: "HANDOVER"
-    # ties in to detect_handover_type()
-    HANDOVER_TYPE_DETECTION: "HANDOVER_TYPE_DETECTION"
+    HANDOVER = "HANDOVER"
+    HANDOVER_TYPE_DETECTION = "HANDOVER_TYPE_DETECTION"
+
+
+class HandoverEventTypes(Enum):
+    HANDOVER_SUCCESS = "HANDOVER_SUCCESS"
+    HANDOVER_TOO_EARLY = "HANDOVER_TOO_EARLY"
+    HANDOVER_TOO_LATE = "HANDOVER_TOO_LATE"
+    HANDOVER_PING_PONG = "HANDOVER_PING_PONG"

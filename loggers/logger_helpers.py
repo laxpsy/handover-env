@@ -1,6 +1,6 @@
 import logging
 
-from logger import SimulationLogger
+from loggers.logger import SimulationLogger
 
 
 def setup_logger():
@@ -30,7 +30,7 @@ def log_error(step: int, event: str, **kwargs):
     details = " ".join(f"{k}={v}" for k, v in kwargs.items())
     logger = logging.getLogger("HANDOVER_ENV")
     logger.error(
-        "t=%04d | EVENT=%S | %s",
+        "t=%04d | EVENT=%s | %s",
         step,
         event,
         details,

@@ -8,10 +8,10 @@
 !core/**/*.py
 !entities/
 !entities/**/*.py
-!simulator/
-!simulator/**/*.py
-!logging/
-!logging/**/*.py
+!simulation/
+!simulation/**/*.py
+!loggers/
+!loggers/**/*.py
 
 # allow root files
 !.python-version
