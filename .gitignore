@@ -21,3 +21,10 @@
 !README.md
 !uv.lock
 !pyproject.toml
+
+# allow static files
+!ue.png
+!ue.svg
+!bs.png
+!bs.svg
+!handover-env.png
