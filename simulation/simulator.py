@@ -3,8 +3,12 @@ from dataclasses import dataclass
 
 from core.handover_helpers import check_handover_type
 from core.son import SON
-from core.ue_bs_helpers import (calculate_rsrp_naive, decide_handovers,
-                                mobility_update, update_timers)
+from core.ue_bs_helpers import (
+    calculate_rsrp_naive,
+    decide_handovers,
+    mobility_update,
+    update_timers,
+)
 from entities.handover_policy import HandoverPolicy
 from entities.network import Network
 from entities.simulation_events import SimulationEvents
@@ -43,6 +47,12 @@ class Simulation:
         - apply SON tuning if failures detected
         """
         try:
+            failure_count_before = (
+                self.statistics.early_handover_count
+                + self.statistics.late_handover_count
+                + self.statistics.ping_pong_handover_count
+            )
+
             mobility_update(self.state_space, self.config)
             calculate_rsrp_naive(self.state_space, self.config)
             decide_handovers(
@@ -50,14 +60,9 @@ class Simulation:
                 self.config,
                 self.handover_policy,
                 self.get_step_count(),
+                self.statistics,
             )
             update_timers(self.state_space)
-
-            failure_count_before = (
-                self.statistics.early_handover_count
-                + self.statistics.late_handover_count
-                + self.statistics.ping_pong_handover_count
-            )
 
             for ue in self.state_space.ues:
                 if ue.handover_state.handover_this_step:

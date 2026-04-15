@@ -2,7 +2,6 @@ import logging
 from typing import Optional
 
 from entities.base_station import BaseStation
-from entities.network import Network
 from entities.simulation_events import HandoverEventTypes, SimulationEvents
 from entities.ue import UE
 from loggers.logger_helpers import log_error, log_event
@@ -20,18 +19,14 @@ def check_handover_type(
     statistics: SimulationStatistics,
 ):
     if ue.serving_bs is None:
-        log_error(
-            step_count,
-            SimulationEvents.HANDOVER_TYPE_DETECTION.value,
-            ue=ue,
-            handover_happened=handover_happened,
-        )
+        ue.handover_state.was_late_since_last_handover = False
         return
 
     ue_serving_bs_rsrp: Optional[float] = ue.rsrp.get(ue.serving_bs)
 
     if ue_serving_bs_rsrp is not None:
         if handover_happened:
+            ue.handover_state.was_late_since_last_handover = False
             if (
                 ue_serving_bs_rsrp < config.RLF_FAILURE_THRESHOLD
                 and ue.handover_state.step_count_since_last_handover
@@ -58,6 +53,7 @@ def check_handover_type(
                     handover_type=HandoverEventTypes.HANDOVER_PING_PONG.value,
                 )
             else:
+                statistics.successful_handover_count += 1
                 log_event(
                     step_count,
                     ue.id,
@@ -66,18 +62,34 @@ def check_handover_type(
                 )
         else:
             if ue_serving_bs_rsrp < config.RLF_FAILURE_THRESHOLD:
-                statistics.late_handover_count += 1
-                log_event(
-                    step_count,
-                    ue.id,
-                    SimulationEvents.HANDOVER_TYPE_DETECTION.value,
-                    handover_type=HandoverEventTypes.HANDOVER_TOO_LATE.value,
-                )
+                if not ue.handover_state.was_late_since_last_handover:
+                    statistics.late_handover_count += 1
+                    log_event(
+                        step_count,
+                        ue.id,
+                        SimulationEvents.HANDOVER_TYPE_DETECTION.value,
+                        handover_type=HandoverEventTypes.HANDOVER_TOO_LATE.value,
+                    )
+                    ue.handover_state.was_late_since_last_handover = True
+            else:
+                ue.handover_state.was_late_since_last_handover = False
 
 
 def perform_handover(
-    ue: UE, target_bs: BaseStation, config: SimulationConfig, step_count: int
+    ue: UE,
+    target_bs: Optional[BaseStation],
+    config: SimulationConfig,
+    step_count: int,
 ):
+    if target_bs is None:
+        log_error(
+            step_count,
+            SimulationEvents.HANDOVER.value,
+            ue=ue,
+            reason="target_bs_is_none",
+        )
+        return
+
     ue.serving_bs = target_bs.id
     if len(ue.handover_history) == config.MAX_HISTORY:
         _ = ue.handover_history.pop(0)
@@ -87,6 +99,8 @@ def perform_handover(
     ue.handover_state.ttt_running = False
     ue.handover_state.ttt_timer = 0.0
     ue.handover_state.handover_this_step = True
+    ue.handover_state.was_late_since_last_handover = False
+    ue.handover_state.handover_flash_steps = 12
     ue.total_handovers += 1
     log_event(
         step_count,
