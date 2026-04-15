@@ -1,6 +1,12 @@
+import logging
+
 from entities.network import Network
+from entities.simulation_events import SimulationEvents
 from entities.ue import UE
+from loggers.logger_helpers import log_event
 from simulation.config import SimulationConfig
+
+logger = logging.getLogger("HANDOVER_ENV")
 
 
 def naive_handover(
@@ -27,6 +33,12 @@ def naive_handover(
             if ue.handover_state.ttt_timer > 0:
                 ue.handover_state.ttt_timer -= 1
             if ue.handover_state.ttt_timer <= 0:
+                log_event(
+                    step_count,
+                    ue.id,
+                    SimulationEvents.HANDOVER.value,
+                    best_bs=best_bs,
+                )
                 return best_bs
         else:
             ue.handover_state.ttt_running = False

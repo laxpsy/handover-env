@@ -4,6 +4,7 @@ from enum import Enum
 class SimulationEvents(Enum):
     HANDOVER = "HANDOVER"
     HANDOVER_TYPE_DETECTION = "HANDOVER_TYPE_DETECTION"
+    STEP_FAILURE = "STEP_FAILURE"
 
 
 class HandoverEventTypes(Enum):

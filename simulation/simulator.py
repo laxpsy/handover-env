@@ -1,17 +1,14 @@
 import logging
 from dataclasses import dataclass
-from loggers.logger_helpers import log_error
 
 from core.handover_helpers import check_handover_type
 from core.son import SON
-from core.ue_bs_helpers import (
-    calculate_rsrp_naive,
-    decide_handovers,
-    mobility_update,
-    update_timers,
-)
+from core.ue_bs_helpers import (calculate_rsrp_naive, decide_handovers,
+                                mobility_update, update_timers)
 from entities.handover_policy import HandoverPolicy
 from entities.network import Network
+from entities.simulation_events import SimulationEvents
+from loggers.logger_helpers import log_error
 from simulation.config import SimulationConfig
 from simulation.statistics import SimulationStatistics
 
@@ -65,12 +62,20 @@ class Simulation:
             for ue in self.state_space.ues:
                 if ue.handover_state.handover_this_step:
                     check_handover_type(
-                        ue, self.config, self.get_step_count(), True, self.statistics
+                        ue,
+                        self.config,
+                        self.get_step_count(),
+                        True,
+                        self.statistics,
                     )
                     ue.handover_state.handover_this_step = False
                 else:
                     check_handover_type(
-                        ue, self.config, self.get_step_count(), False, self.statistics
+                        ue,
+                        self.config,
+                        self.get_step_count(),
+                        False,
+                        self.statistics,
                     )
 
             failure_count_after = (
@@ -87,7 +92,7 @@ class Simulation:
         except Exception as e:
             log_error(
                 self.get_step_count(),
-                "STEP_FAILED",
+                SimulationEvents.STEP_FAILURE.value,
                 exception_type=type(e).__name__,
                 exception_message=str(e),
             )

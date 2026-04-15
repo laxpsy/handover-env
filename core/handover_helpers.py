@@ -1,12 +1,11 @@
 import logging
 from typing import Optional
 
-from loggers.logger_helpers import log_error, log_event
-
 from entities.base_station import BaseStation
 from entities.network import Network
 from entities.simulation_events import HandoverEventTypes, SimulationEvents
 from entities.ue import UE
+from loggers.logger_helpers import log_error, log_event
 from simulation.config import SimulationConfig
 from simulation.statistics import SimulationStatistics
 
@@ -23,7 +22,7 @@ def check_handover_type(
     if ue.serving_bs is None:
         log_error(
             step_count,
-            SimulationEvents.HANDOVER_TYPE_DETECTION,
+            SimulationEvents.HANDOVER_TYPE_DETECTION.value,
             ue=ue,
             handover_happened=handover_happened,
         )
@@ -42,8 +41,8 @@ def check_handover_type(
                 log_event(
                     step_count,
                     ue.id,
-                    SimulationEvents.HANDOVER_TYPE_DETECTION,
-                    handover_type=HandoverEventTypes.HANDOVER_TOO_EARLY,
+                    SimulationEvents.HANDOVER_TYPE_DETECTION.value,
+                    handover_type=HandoverEventTypes.HANDOVER_TOO_EARLY.value,
                 )
             elif (
                 len(ue.handover_history) >= config.MIN_HISTORY_LENGTH
@@ -55,15 +54,15 @@ def check_handover_type(
                 log_event(
                     step_count,
                     ue.id,
-                    SimulationEvents.HANDOVER_TYPE_DETECTION,
-                    handover_type=HandoverEventTypes.HANDOVER_PING_PONG,
+                    SimulationEvents.HANDOVER_TYPE_DETECTION.value,
+                    handover_type=HandoverEventTypes.HANDOVER_PING_PONG.value,
                 )
             else:
                 log_event(
                     step_count,
                     ue.id,
-                    SimulationEvents.HANDOVER_TYPE_DETECTION,
-                    handover_type=HandoverEventTypes.HANDOVER_SUCCESS,
+                    SimulationEvents.HANDOVER_TYPE_DETECTION.value,
+                    handover_type=HandoverEventTypes.HANDOVER_SUCCESS.value,
                 )
         else:
             if ue_serving_bs_rsrp < config.RLF_FAILURE_THRESHOLD:
@@ -71,8 +70,8 @@ def check_handover_type(
                 log_event(
                     step_count,
                     ue.id,
-                    SimulationEvents.HANDOVER_TYPE_DETECTION,
-                    handover_type=HandoverEventTypes.HANDOVER_TOO_LATE,
+                    SimulationEvents.HANDOVER_TYPE_DETECTION.value,
+                    handover_type=HandoverEventTypes.HANDOVER_TOO_LATE.value,
                 )
 
 
@@ -89,4 +88,10 @@ def perform_handover(
     ue.handover_state.ttt_timer = 0.0
     ue.handover_state.handover_this_step = True
     ue.total_handovers += 1
-    log_event(step_count, ue.id, SimulationEvents.HANDOVER, ue=ue, target_bs=target_bs)
+    log_event(
+        step_count,
+        ue.id,
+        SimulationEvents.HANDOVER.value,
+        ue=ue,
+        target_bs=target_bs,
+    )

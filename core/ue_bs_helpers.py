@@ -1,5 +1,4 @@
 import numpy as np
-from simulation.config import SimulationConfig
 
 from core.handover_helpers import perform_handover
 from entities.base_station import BaseStation
@@ -7,14 +6,17 @@ from entities.handover_policy import HandoverPolicy
 from entities.network import Network
 from entities.rendering_entities import Coordinates
 from entities.ue import UE, UEMovementType
+from simulation.config import SimulationConfig
 
 
-def calculate_distance(c1: Coordinates, c2: Coordinates) -> float:
+def calculate_distance(
+    c1: Coordinates, c2: Coordinates, config: SimulationConfig
+) -> float:
     dx = c2.x - c1.x
     dy = c2.y - c1.y
 
     return max(
-        SimulationConfig.PATH_LOSS_REFERENCE_DISTANCE,
+        config.PATH_LOSS_REFERENCE_DISTANCE,
         np.sqrt(dx * dx + dy * dy),
     )
 
@@ -22,15 +24,23 @@ def calculate_distance(c1: Coordinates, c2: Coordinates) -> float:
 def calculate_rsrp_ue_bs_pair(
     ue: UE, bs: BaseStation, config: SimulationConfig
 ) -> float:
+    if bs.transmission_frequency == 0:
+        raise ValueError("transmission_frequency is 0")
     transmission_wavelength = config.SPEED_OF_LIGHT / bs.transmission_frequency
-    if transmission_wavelength == 0:
-        raise ValueError("transmission_wavelength is 0")
     path_loss_reference = 20 * np.log10(
-        4 * np.pi * config.PATH_LOSS_REFERENCE_DISTANCE / transmission_wavelength
+        4
+        * np.pi
+        * config.PATH_LOSS_REFERENCE_DISTANCE
+        / transmission_wavelength
     )
-    path_loss = path_loss_reference + 10 * config.PATH_LOSS_EXPONENT * np.log10(
-        calculate_distance(ue.coordinates, bs.coordinates)
-        / config.PATH_LOSS_REFERENCE_DISTANCE
+    path_loss = (
+        path_loss_reference
+        + 10
+        * config.PATH_LOSS_EXPONENT
+        * np.log10(
+            calculate_distance(ue.coordinates, bs.coordinates, config)
+            / config.PATH_LOSS_REFERENCE_DISTANCE
+        )
     )
     return bs.tx_power - path_loss
 
@@ -40,9 +50,15 @@ def mobility_update(state_space: Network, config: SimulationConfig) -> None:
         if ue.movement_type == UEMovementType.Linear:
             ue.coordinates.x += ue.velocity_x
             ue.coordinates.y += ue.velocity_y
-            if ue.coordinates.x <= 0 or ue.coordinates.x >= config.SCREEN_WIDTH:
+            if (
+                ue.coordinates.x <= 0
+                or ue.coordinates.x >= config.SCREEN_WIDTH
+            ):
                 ue.velocity_x *= -1
-            if ue.coordinates.y <= 0 or ue.coordinates.y >= config.SCREEN_HEIGHT:
+            if (
+                ue.coordinates.y <= 0
+                or ue.coordinates.y >= config.SCREEN_HEIGHT
+            ):
                 ue.velocity_y *= -1
         elif ue.movement_type == UEMovementType.Random:
             angle = np.arctan2(ue.velocity_y, ue.velocity_x)
@@ -72,7 +88,9 @@ def update_timers(state_space: Network) -> None:
         ue.handover_state.step_count_since_last_handover += 1
 
 
-def calculate_rsrp_naive(state_space: Network, config: SimulationConfig) -> None:
+def calculate_rsrp_naive(
+    state_space: Network, config: SimulationConfig
+) -> None:
     for ue in state_space.ues:
         ue.rsrp.clear()
         for bs in state_space.base_stations:
