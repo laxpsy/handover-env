@@ -16,7 +16,7 @@ class SimulationConfig:
     HYSTERISIS_MARGIN: float = 3
     TIME_TO_TRIGGER: float = 3
     PING_PONG_WINDOW: float = 3
-    RLF_FAILURE_THRESHOLD: float = -100
+    RLF_FAILURE_THRESHOLD: float = -97
     # ue history parameter
     MAX_HISTORY: int = 10
     # handover type detection parameters
@@ -25,5 +25,14 @@ class SimulationConfig:
     # ue defaults
     DEFAULT_VELOCITY: float = 1.0
     # base station defaults
-    DEFAULT_TX_POWER: float = 43.0
-    DEFAULT_FREQUENCY: float = 2.1e9
+    DEFAULT_TX_POWER: float = 53.0
+    DEFAULT_FREQUENCY: float = 24.25e9
+    # baseline values for SON tracking and UI
+    ORIGINAL_HYSTERISIS_MARGIN: float | None = None
+    ORIGINAL_TIME_TO_TRIGGER: float | None = None
+
+    def __post_init__(self) -> None:
+        if self.ORIGINAL_HYSTERISIS_MARGIN is None:
+            self.ORIGINAL_HYSTERISIS_MARGIN = float(self.HYSTERISIS_MARGIN)
+        if self.ORIGINAL_TIME_TO_TRIGGER is None:
+            self.ORIGINAL_TIME_TO_TRIGGER = float(self.TIME_TO_TRIGGER)

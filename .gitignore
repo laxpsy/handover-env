@@ -12,6 +12,8 @@
 !simulation/**/*.py
 !loggers/
 !loggers/**/*.py
+!rendering/
+!rendering/**/*.py
 
 # allow root files
 !.python-version

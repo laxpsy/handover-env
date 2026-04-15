@@ -23,13 +23,13 @@ DEFAULT_CONFIG = SimulationConfig(
     HYSTERISIS_MARGIN=3,
     TIME_TO_TRIGGER=3,
     PING_PONG_WINDOW=3,
-    RLF_FAILURE_THRESHOLD=-100,
+    RLF_FAILURE_THRESHOLD=-97,
     MAX_HISTORY=10,
     EARLY_HANDOVER_WINDOW=1000,
     MIN_HISTORY_LENGTH=3,
     DEFAULT_VELOCITY=1.0,
-    DEFAULT_TX_POWER=43.0,
-    DEFAULT_FREQUENCY=2.1e9,
+    DEFAULT_TX_POWER=53.0,
+    DEFAULT_FREQUENCY=24.25e9,
 )
 
 HIGH_MOBILITY_CONFIG = SimulationConfig(
@@ -39,13 +39,13 @@ HIGH_MOBILITY_CONFIG = SimulationConfig(
     HYSTERISIS_MARGIN=4,
     TIME_TO_TRIGGER=5,
     PING_PONG_WINDOW=4,
-    RLF_FAILURE_THRESHOLD=-100,
+    RLF_FAILURE_THRESHOLD=-97,
     MAX_HISTORY=10,
     EARLY_HANDOVER_WINDOW=1000,
     MIN_HISTORY_LENGTH=3,
     DEFAULT_VELOCITY=3.0,
-    DEFAULT_TX_POWER=43.0,
-    DEFAULT_FREQUENCY=2.1e9,
+    DEFAULT_TX_POWER=53.0,
+    DEFAULT_FREQUENCY=24.25e9,
 )
 
 LOW_LATENCY_CONFIG = SimulationConfig(
@@ -55,13 +55,13 @@ LOW_LATENCY_CONFIG = SimulationConfig(
     HYSTERISIS_MARGIN=2,
     TIME_TO_TRIGGER=1,
     PING_PONG_WINDOW=2,
-    RLF_FAILURE_THRESHOLD=-100,
+    RLF_FAILURE_THRESHOLD=-97,
     MAX_HISTORY=10,
     EARLY_HANDOVER_WINDOW=500,
     MIN_HISTORY_LENGTH=3,
     DEFAULT_VELOCITY=1.5,
-    DEFAULT_TX_POWER=43.0,
-    DEFAULT_FREQUENCY=2.1e9,
+    DEFAULT_TX_POWER=53.0,
+    DEFAULT_FREQUENCY=24.25e9,
 )
 
 
@@ -256,6 +256,7 @@ class HandoverEnv(gym.Env):
                 "ping_pong": self.statistics.ping_pong_handover_count,
                 "early": self.statistics.early_handover_count,
                 "late": self.statistics.late_handover_count,
+                "success": self.statistics.successful_handover_count,
             },
             "config": self.simulation.get_config(),
         }
