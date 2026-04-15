@@ -1,7 +1,14 @@
 from dataclasses import dataclass
-from typing import Optional, Dict
+from enum import Enum
 
+from entities.handover import UEHandoverState
 from entities.rendering_entities import Coordinates
+
+
+class UEMovementType(Enum):
+    Linear = 0
+    Random = 1
+
 
 @dataclass
 class UE:
@@ -9,6 +16,9 @@ class UE:
     coordinates: Coordinates
     velocity_x: float
     velocity_y: float
-    serving_bs: Optional[int]
-    rsrp: Dict[int, int]
-
+    serving_bs: int | None
+    rsrp: dict[int, float]
+    movement_type: UEMovementType
+    handover_state: UEHandoverState
+    handover_history: list[int]
+    total_handovers: int

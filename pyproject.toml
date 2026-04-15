@@ -8,3 +8,5 @@ dependencies = [
     "numpy>=2.4.3",
     "raylib>=5.5.0.4",
 ]
+[tool.black]
+line-length = 79

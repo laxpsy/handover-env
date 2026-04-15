@@ -1,12 +1,21 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+# ignore everything
+*
 
-# Virtual environments
-.venv
+# allow project dirs
+!algorithms/
+!algorithms/**/*.py
+!core/
+!core/**/*.py
+!entities/
+!entities/**/*.py
+!simulation/
+!simulation/**/*.py
+!loggers/
+!loggers/**/*.py
 
-todo
+# allow root files
+!.python-version
+!main.py
+!README.md
+!uv.lock
+!pyproject.toml
