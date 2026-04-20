@@ -1,0 +1,70 @@
+RAYLIB STATIC 5.5.0.4 LOADED
+Scenario: linear
+Mode: train
+
+======================================================================
+Starting Q-Learning Training
+Episodes: 1200 | Steps/Episode: 1000
+α=0.05 | γ=0.97 | ε_decay=0.996
+======================================================================
+
+Ep  25 | ε=0.9047 | Q-states:    7 | Late:  0 | PP: 5439 | Success: 100
+Ep  50 | ε=0.8184 | Q-states:    7 | Late:  0 | PP: 5280 | Success: 111
+Ep  75 | ε=0.7404 | Q-states:    7 | Late:  0 | PP: 5062 | Success: 101
+Ep 100 | ε=0.6698 | Q-states:    7 | Late:  0 | PP: 4335 | Success: 106
+Ep 125 | ε=0.6059 | Q-states:    7 | Late:  0 | PP: 3991 | Success: 97
+Ep 150 | ε=0.5482 | Q-states:    7 | Late:  0 | PP: 3822 | Success: 103
+Ep 175 | ε=0.4959 | Q-states:    7 | Late:  0 | PP: 3536 | Success: 115
+Ep 200 | ε=0.4486 | Q-states:    7 | Late:  0 | PP: 3388 | Success: 91
+Ep 225 | ε=0.4058 | Q-states:    7 | Late:  0 | PP: 3101 | Success: 96
+Ep 250 | ε=0.3671 | Q-states:    7 | Late:  0 | PP: 2854 | Success: 98
+Ep 275 | ε=0.3321 | Q-states:    7 | Late:  0 | PP: 2350 | Success: 98
+Ep 300 | ε=0.3005 | Q-states:    7 | Late:  0 | PP: 2391 | Success: 101
+Ep 325 | ε=0.2718 | Q-states:    7 | Late:  0 | PP: 2194 | Success: 101
+Ep 350 | ε=0.2459 | Q-states:    7 | Late:  0 | PP: 1973 | Success: 110
+Ep 375 | ε=0.2225 | Q-states:    7 | Late:  0 | PP: 1825 | Success: 94
+Ep 400 | ε=0.2012 | Q-states:    7 | Late:  0 | PP: 1748 | Success: 100
+Ep 425 | ε=0.1821 | Q-states:    7 | Late:  0 | PP: 1529 | Success: 106
+Ep 450 | ε=0.1647 | Q-states:    7 | Late:  0 | PP: 1351 | Success: 92
+Ep 475 | ε=0.1490 | Q-states:    7 | Late:  0 | PP: 1307 | Success: 100
+Ep 500 | ε=0.1348 | Q-states:    7 | Late:  0 | PP: 1313 | Success: 110
+Ep 525 | ε=0.1219 | Q-states:    7 | Late:  0 | PP: 997 | Success: 96
+Ep 550 | ε=0.1103 | Q-states:    7 | Late:  0 | PP: 887 | Success: 92
+Ep 575 | ε=0.0998 | Q-states:    7 | Late:  0 | PP: 789 | Success: 103
+Ep 600 | ε=0.0903 | Q-states:    7 | Late:  0 | PP: 741 | Success: 84
+Ep 625 | ε=0.0817 | Q-states:    7 | Late:  0 | PP: 627 | Success: 97
+Ep 650 | ε=0.0739 | Q-states:    7 | Late:  0 | PP: 708 | Success: 95
+Ep 675 | ε=0.0668 | Q-states:    7 | Late:  0 | PP: 593 | Success: 93
+Ep 700 | ε=0.0605 | Q-states:    7 | Late:  0 | PP: 702 | Success: 99
+Ep 725 | ε=0.0547 | Q-states:    7 | Late:  0 | PP: 578 | Success: 91
+Ep 750 | ε=0.0500 | Q-states:    7 | Late:  0 | PP: 423 | Success: 104
+Ep 775 | ε=0.0500 | Q-states:    7 | Late:  0 | PP: 439 | Success: 87
+Ep 800 | ε=0.0500 | Q-states:    7 | Late:  0 | PP: 650 | Success: 93
+Ep 825 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 562 | Success: 91
+Ep 850 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 397 | Success: 94
+Ep 875 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 461 | Success: 96
+Ep 900 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 452 | Success: 100
+Ep 925 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 379 | Success: 82
+Ep 950 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 484 | Success: 102
+Ep 975 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 457 | Success: 93
+Ep 1000 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 397 | Success: 82
+Ep 1025 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 713 | Success: 106
+Ep 1050 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 650 | Success: 91
+Ep 1075 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 329 | Success: 100
+Ep 1100 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 463 | Success: 85
+Ep 1125 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 470 | Success: 89
+Ep 1150 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 465 | Success: 91
+Ep 1175 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 433 | Success: 85
+Ep 1200 | ε=0.0500 | Q-states:    8 | Late:  0 | PP: 535 | Success: 84
+
+Final agent saved to checkpoints/q_agent_linear_final.pkl
+
+======================================================================
+Training Summary
+======================================================================
+Final Q-table size: 8
+Final epsilon: 0.0500
+
+Example state (2, 0, 0):
+  Q(stay) = -1.2287
+  Q(handover) = -2.0093

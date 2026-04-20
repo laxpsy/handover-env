@@ -9,6 +9,7 @@ from core.ue_bs_helpers import (
     mobility_update,
     update_timers,
 )
+from entities.handover import UEHandoverState
 from entities.handover_policy import HandoverPolicy
 from entities.network import Network
 from entities.simulation_events import SimulationEvents
@@ -33,6 +34,35 @@ class Simulation:
 
     def get_config(self) -> SimulationConfig:
         return self.config
+
+    def reset(self) -> None:
+        """
+        Reset simulation state for a new training episode.
+        
+        Clears:
+        - Step counter
+        - Time
+        - Statistics
+        - UE handover states (but preserves positions and velocities)
+        """
+        self._step_count = 0
+        self.time = 0.0
+        self.statistics = SimulationStatistics()
+        
+        # Reset each UE's handover state
+        for ue in self.state_space.ues:
+            ue.handover_state = UEHandoverState(
+                target_base_station=-1,
+                ttt_timer=0.0,
+                ttt_running=False,
+                step_count_since_last_handover=0,
+                handover_this_step=False,
+                was_late_since_last_handover=False,
+                handover_flash_steps=0,
+            )
+            ue.handover_history = []
+            ue.total_handovers = 0
+            ue.rsrp = {}
 
     def step(self) -> None:
         """
